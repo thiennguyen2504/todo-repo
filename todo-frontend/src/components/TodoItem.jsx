@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ConfirmDialog from './ui/ConfirmDialog';
+import { IconEdit, IconTrash } from './ui/Icons';
 
 export default function TodoItem({ todo, onToggle, onEdit, onDelete, isToggling, isDeleting }) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -12,43 +13,76 @@ export default function TodoItem({ todo, onToggle, onEdit, onDelete, isToggling,
 
   return (
     <>
-      <div className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-4 border-b border-gray-100 bg-white hover:bg-gray-50 transition-colors ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
-        
+      <div
+        className={`group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 transition-colors ${
+          isDeleting ? 'opacity-40 pointer-events-none' : 'hover:bg-[var(--color-bg-hover)]'
+        }`}
+      >
+        {/* Checkbox + content */}
         <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
           <input
             type="checkbox"
             checked={isCompleted}
             onChange={() => onToggle(todo.id)}
             disabled={isToggling}
-            className="mt-1 sm:mt-0 w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer disabled:cursor-wait shrink-0"
+            aria-label={`Đánh dấu "${todo.title}" là ${isCompleted ? 'chưa hoàn thành' : 'đã hoàn thành'}`}
+            className="mt-0.5 sm:mt-0"
           />
-          
+
           <div className="flex-1 min-w-0">
-            <h4 className={`text-base font-medium truncate ${isCompleted ? 'line-through text-gray-400' : 'text-gray-900'}`}>
-              {todo.title}
-            </h4>
+            <div className="flex items-center gap-2.5">
+              <h4
+                className={`text-sm font-medium truncate transition-colors ${
+                  isCompleted
+                    ? 'line-through text-[var(--color-text-muted)]'
+                    : 'text-[var(--color-text-primary)]'
+                }`}
+              >
+                {todo.title}
+              </h4>
+              <span
+                className={`shrink-0 inline-flex px-2 py-0.5 text-[11px] font-medium rounded-[var(--radius-badge)] leading-tight ${
+                  isCompleted
+                    ? 'bg-[var(--color-status-completed-bg)] text-[var(--color-status-completed-text)]'
+                    : 'bg-[var(--color-status-pending-bg)] text-[var(--color-status-pending-text)]'
+                }`}
+              >
+                {isCompleted ? 'Hoàn thành' : 'Đang chờ'}
+              </span>
+            </div>
             {todo.description && (
-              <p className={`text-sm mt-1 sm:mt-0.5 whitespace-pre-wrap sm:truncate ${isCompleted ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs mt-0.5 truncate transition-colors ${
+                  isCompleted
+                    ? 'text-[var(--color-text-muted)]'
+                    : 'text-[var(--color-text-secondary)]'
+                }`}
+              >
                 {todo.description}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2 shrink-0 mt-2 sm:mt-0 sm:ml-4 border-t sm:border-t-0 border-gray-100 pt-2 sm:pt-0">
+        {/* Actions — visible on hover (desktop) / always visible (mobile) */}
+        <div className="flex items-center gap-1 shrink-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity ml-8 sm:ml-0">
           <button
+            type="button"
             onClick={() => onEdit(todo)}
-            className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors focus:outline-none flex items-center gap-1 text-sm sm:text-base"
+            className="p-2 text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:bg-[var(--color-accent-light)] rounded-lg focus-ring transition-colors"
             title="Chỉnh sửa"
+            aria-label={`Chỉnh sửa "${todo.title}"`}
           >
-            ✏️ <span className="sm:hidden font-medium">Sửa</span>
+            <IconEdit size={15} />
           </button>
           <button
+            type="button"
             onClick={() => setIsConfirmOpen(true)}
-            className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors focus:outline-none flex items-center gap-1 text-sm sm:text-base"
+            className="p-2 text-[var(--color-text-muted)] hover:text-[var(--color-danger)] hover:bg-[var(--color-danger-light)] rounded-lg focus-ring transition-colors"
             title="Xóa"
+            aria-label={`Xóa "${todo.title}"`}
           >
-            🗑️ <span className="sm:hidden font-medium">Xóa</span>
+            <IconTrash size={15} />
           </button>
         </div>
       </div>

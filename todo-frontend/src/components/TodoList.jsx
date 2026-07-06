@@ -19,7 +19,7 @@ export default function TodoList({
 
   if (isListLoading && todos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+      <div className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] overflow-hidden">
         {[1, 2, 3, 4, 5].map((i) => (
           <Skeleton key={i} />
         ))}
@@ -50,13 +50,13 @@ export default function TodoList({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 relative">
+    <div className="bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] overflow-hidden relative">
       {isListLoading && (
-        <div className="absolute inset-0 bg-white/50 z-10 flex items-center justify-center">
-          <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        <div className="absolute inset-0 bg-white/60 z-10 flex items-center justify-center">
+          <div className="w-5 h-5 border-2 border-[var(--color-accent)] border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <div className="divide-y divide-gray-100">
+      <div className="divide-y divide-[var(--color-border)]">
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}

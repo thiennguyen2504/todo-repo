@@ -1,16 +1,27 @@
 import React from 'react';
+import { IconClipboard, IconPlus } from './Icons';
 
 export default function EmptyState({ title, description, actionLabel, onAction }) {
   return (
-    <div className="flex flex-col items-center justify-center p-10 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg my-4">
-      <div className="text-4xl mb-4 text-gray-400">📝</div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-1">{title}</h3>
-      <p className="text-gray-500 mb-6 max-w-sm">{description}</p>
+    <div className="flex flex-col items-center justify-center py-16 px-8 text-center bg-white border border-[var(--color-border)] rounded-[var(--radius-card)] shadow-[var(--shadow-card)] animate-fade-in">
+      {/* SVG accent illustration */}
+      <div className="mb-5 text-[var(--color-text-muted)] opacity-40">
+        <IconClipboard size={52} />
+      </div>
+
+      <h3 className="text-base font-semibold text-[var(--color-text-primary)] mb-1.5">
+        {title}
+      </h3>
+      <p className="text-sm text-[var(--color-text-muted)] mb-6 max-w-xs leading-relaxed">
+        {description}
+      </p>
       {actionLabel && onAction && (
         <button
+          type="button"
           onClick={onAction}
-          className="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] rounded-[var(--radius-button)] focus-ring transition-colors"
         >
+          <IconPlus size={15} />
           {actionLabel}
         </button>
       )}
