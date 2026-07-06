@@ -1,6 +1,6 @@
 # Todo List Application
 
-🔗 **Live Demo:** [https://todo-repo-h90a35sqz-minh-thien.vercel.app/](https://todo-repo-h90a35sqz-minh-thien.vercel.app/)
+🔗 **Live Demo:** [https://todo-repo-lemon.vercel.app/](https://todo-repo-lemon.vercel.app/)
 
 ## 1. Giới thiệu
 Dự án Todo List là một hệ thống quản lý công việc. Đây là một ứng dụng full-stack (Monorepo) bao gồm:
