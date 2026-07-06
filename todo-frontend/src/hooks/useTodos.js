@@ -56,7 +56,7 @@ export default function useTodos() {
       const params = {
         page: pagination.page,
         size: pagination.size,
-        keyword: debouncedSearch,
+        search: debouncedSearch,
         status: filter.status,
         sortBy: filter.sortBy,
         sortDir: filter.sortDir,

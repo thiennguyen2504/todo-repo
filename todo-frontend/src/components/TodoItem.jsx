@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import ConfirmDialog from './ui/ConfirmDialog';
-import { IconEdit, IconTrash } from './ui/Icons';
+import { IconEdit, IconTrash, IconClock } from './ui/Icons';
 
 export default function TodoItem({ todo, onToggle, onEdit, onDelete, isToggling, isDeleting }) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const isCompleted = todo.status === 'COMPLETED';
+
+  const formattedDate = new Date(todo.createdAt).toLocaleString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   const handleDeleteConfirm = () => {
     onDelete(todo.id);
@@ -50,17 +58,24 @@ export default function TodoItem({ todo, onToggle, onEdit, onDelete, isToggling,
                 {isCompleted ? 'Hoàn thành' : 'Đang chờ'}
               </span>
             </div>
-            {todo.description && (
-              <p
-                className={`text-xs mt-0.5 truncate transition-colors ${
-                  isCompleted
-                    ? 'text-[var(--color-text-muted)]'
-                    : 'text-[var(--color-text-secondary)]'
-                }`}
-              >
-                {todo.description}
-              </p>
-            )}
+            <div
+              className={`flex flex-col sm:flex-row sm:items-center sm:gap-2 text-xs mt-1 transition-colors ${
+                isCompleted
+                  ? 'text-[var(--color-text-muted)]'
+                  : 'text-[var(--color-text-secondary)]'
+              }`}
+            >
+              {todo.description && (
+                <p className="truncate mb-1 sm:mb-0 max-w-full">
+                  {todo.description}
+                </p>
+              )}
+              {todo.description && <span className="hidden sm:inline opacity-50 shrink-0">•</span>}
+              <span className="shrink-0 flex items-center gap-1 opacity-80" title="Ngày tạo">
+                <IconClock size={12} />
+                {formattedDate}
+              </span>
+            </div>
           </div>
         </div>
 
