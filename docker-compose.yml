@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: todo-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./todo-backend
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/todoapp
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./todo-frontend
+      dockerfile: Dockerfile
+      args:
+        # Giải thích: Vite là công cụ build tĩnh (Static Site Generator / Bundler).
+        # Khi lệnh `npm run build` chạy, nó sẽ đọc biến môi trường VITE_* và "nhúng" (hardcode)
+        # giá trị đó trực tiếp vào các file JS đầu ra (thư mục dist).
+        # Do đó, biến môi trường VITE_API_BASE_URL phải được truyền bằng ARG trong quá trình
+        # docker build chứ không phải lúc docker run.
+        # Ở đây, http://localhost:8080 là địa chỉ backend expose ra ngoài host,
+        # và trình duyệt của người dùng (chạy trên host) sẽ gọi API tới địa chỉ này.
+        - VITE_API_BASE_URL=http://localhost:8080/api
+    container_name: todo-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
