@@ -14,7 +14,7 @@ const todoApi = {
     return axiosClient.put(`/todos/${id}`, payload);
   },
   toggleTodoStatus(id) {
-    return axiosClient.patch(`/todos/${id}/status`);
+    return axiosClient.patch(`/todos/${id}/toggle-status`);
   },
   deleteTodo(id) {
     return axiosClient.delete(`/todos/${id}`);
