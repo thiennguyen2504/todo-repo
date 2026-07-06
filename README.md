@@ -1,5 +1,7 @@
 # Todo List Application
 
+🔗 **Live Demo:** [https://todo-repo-h90a35sqz-minh-thien.vercel.app/](https://todo-repo-h90a35sqz-minh-thien.vercel.app/)
+
 ## 1. Giới thiệu
 Dự án Todo List là một hệ thống quản lý công việc. Đây là một ứng dụng full-stack (Monorepo) bao gồm:
 - **Backend:** Xây dựng bằng Java Spring Boot, sử dụng MongoDB để lưu trữ dữ liệu.
@@ -59,7 +61,3 @@ Swagger UI (API Docs): **[http://localhost:8080/swagger-ui.html](http://localhos
 | `PATCH` | `/api/todos/{id}/toggle-status` | Thay đổi trạng thái Todo (PENDING <-> COMPLETED) |
 | `DELETE` | `/api/todos/{id}` | Xóa một Todo |
 
-## 6. Ghi chú / Giới hạn (Known Issues)
-- Ứng dụng hiện tại chưa tích hợp Authentication/Authorization, định hướng sử dụng cho Single-user.
-- Testcontainers yêu cầu máy tính chạy Backend Test phải cài đặt và bật sẵn Docker.
-- Config database trên Docker Compose hiện tại dùng cơ chế cơ bản không có username/password để tiện lợi cho việc demo và phát triển local.
